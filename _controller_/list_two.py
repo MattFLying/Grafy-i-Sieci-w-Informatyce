@@ -129,7 +129,7 @@ def task_two():
     minV = int(min(GRAPH.getUniqueVertices()))
     maxV = int(max(GRAPH.getUniqueVertices()))
     list1 = list(dfs_paths(edges_dictionary(), minV, maxV))
-    list2 = list(dfs_paths(edges_dictionary(), maxV, minV))
+    
     maxPath = min(list1)
     
     build_array(_description, FILE_DESCRIPTION)  
@@ -146,24 +146,30 @@ def task_two():
         build_array(_description, str(i))
         build_array(_description, "\n")   
     
-    
-    
-    count = 0
-    for i in GRAPH.getUniqueVertices():
-        if int(i) in maxPath:
-            count += 1
-    
     edgeCheck1 = str(maxPath[0]) + GRAPH_EDGE_SEPARATOR + str(maxPath[-1])
     edgeCheck2 = str(maxPath[-1]) + GRAPH_EDGE_SEPARATOR + str(maxPath[0])
     
-    if edgeCheck1 or edgeCheck2 in GRAPH.getEdgesCollection():
+    build_array(_description, "\nGraf ")
+    build_array(_description, GRAPH.getName())
+    build_array(_description, " jest grafem ") 
+    
+    if (edgeCheck1 or edgeCheck2) in GRAPH.getEdgesCollection():
         if maxPath[-2] != minV:
-            print()
+            build_array(_description, "cyklicznym wedlug sciezki: ")
+            build_array(_description, str(maxPath))
+            build_array(_description, ", zaczynajac od wierzcholka ")
+            build_array(_description, str(minV))
+            build_array(_description, " do wierzcholka ")
+            build_array(_description, str(maxV))
+            build_array(_description, ", miedzy ktorymi rowniez istnieje polaczenie zamykajace cykl.")
+    else:
+        build_array(_description, "acyklicznym gdyz brak polaczenia zamykajacego cykl od wierzcholka ")  
+        build_array(_description, str(minV))
+        build_array(_description, " do wierzcholka ")
+        build_array(_description, str(maxV)) 
+        build_array(_description, ".")
     
-    
-    
-    
-    
+
     result = result.join(_description)
     
     return result 
@@ -177,9 +183,6 @@ def task_two():
 
 
 print(task_two())
-
-
-
 
 
 
