@@ -9,7 +9,7 @@ from _model_._graph import graph as _graph_
 
 GRAPH_FILE_PATH = "F:\GitHub\GiSwI\_model_\_files\_lists_\graph_file_task_2_v1.txt"
 GRAPH_FILE_MODE = 'r'
-GRAPH_FILE = _file_.readFile(GRAPH_FILE_PATH, GRAPH_FILE_MODE)
+GRAPH_FILE = _file_.readWriteFile(GRAPH_FILE_PATH, GRAPH_FILE_MODE)
 FILE_DESCRIPTION = "Plik uzyty do wczytania grafu: " + str(GRAPH_FILE.name)
 GRAPH_DICTIONARY = _file_.convertGraphFileIntoDictionaryGraphvizStyle(GRAPH_FILE)
 GRAPH = _graph_.Graph(GRAPH_DICTIONARY, 2)
@@ -22,10 +22,10 @@ Help methods.
 def build_array(array, element):
     array.append(element)  
     
-def edges_dictionary():
+def edges_dictionary(edges_, vertices_):
     
-    edges = GRAPH.getEdgesCollection()
-    vertices = GRAPH.getUniqueVertices()
+    edges = edges_
+    vertices = vertices_
     edgesDictionary = {}
     
     for vertice in vertices:
@@ -67,6 +67,36 @@ def graph_degree(edgesCollection_, vertices_):
 
     return dictionary
 
+def createCycleGraph(edges, vertices, name):
+    
+    newEdgesCollection = edges  
+    maxV = int(max(vertices))
+    vertices.append(str(maxV + 1))
+    newMaxV = int(max(vertices))
+    
+    for v in vertices:
+        if int(v) != int(newMaxV):
+            edge = str(v) + GRAPH_EDGE_SEPARATOR + str(newMaxV)
+            newEdgesCollection.append(edge)
+    
+    edgesDictionary = {}
+    edgesDictionary['name'] = name
+    newEdgesTab = []
+    
+    for edge in newEdgesCollection:
+        text = edge.split(GRAPH_EDGE_SEPARATOR) 
+        newEdgesTab.append(text)
+        
+    edgesDictionary['name'] = name
+    edgesDictionary['edges'] = newEdgesTab
+    edgesDictionary['vertices'] = vertices
+    
+    return edgesDictionary
+
+def createCyclicGraphFile(circleGraph):
+    file_path = "F:\GitHub\GiSwI\_model_\_files\_lists_"  
+    _file_.createGraphFile(file_path, circleGraph['name'], circleGraph['edges'])
+    
 
 '''
 Methods representing 5 tasks from laboratory list.
@@ -82,12 +112,14 @@ def task_one():
     )
     regular_checking = []
     
+    edges = edges_dictionary(GRAPH.getEdgesCollection(), GRAPH.getUniqueVertices())
+    
     build_array(_description, "\n\nWierzcholki, ich polaczenia oraz stopnie:")
-    for i in sorted(edges_dictionary()):
+    for i in sorted(edges):
         build_array(_description, "\n")
         build_array(_description, str(i))
         build_array(_description, ": ")
-        build_array(_description, str(edges_dictionary().get(i)))
+        build_array(_description, str(edges.get(i)))
         
         for j in dictionary.keys():
             if i == j:
@@ -126,9 +158,11 @@ def task_two():
     result = ""    
     _description = []
     
+    edges = edges_dictionary(GRAPH.getEdgesCollection(), GRAPH.getUniqueVertices())
+    
     minV = int(min(GRAPH.getUniqueVertices()))
     maxV = int(max(GRAPH.getUniqueVertices()))
-    list1 = list(dfs_paths(edges_dictionary(), minV, maxV))
+    list1 = list(dfs_paths(edges, minV, maxV))
     
     maxPath = min(list1)
     
@@ -161,7 +195,16 @@ def task_two():
             build_array(_description, str(minV))
             build_array(_description, " do wierzcholka ")
             build_array(_description, str(maxV))
-            build_array(_description, ", miedzy ktorymi rowniez istnieje polaczenie zamykajace cykl.")
+            build_array(_description, ", miedzy ktorymi rowniez istnieje polaczenie zamykajace cykl.\n")
+            
+            circleGraph = createCycleGraph(GRAPH.getEdgesCollection(), GRAPH.getUniqueVertices(), "W")
+            createCyclicGraphFile(circleGraph)
+            
+            build_array(_description, "\nLista krawedzi grafu typu kolo W: \n")
+            
+            for i in circleGraph['edges']:
+                build_array(_description, str(i).replace("['", "").replace("']", "").replace("', '", " -- "))
+                build_array(_description, "\n")
     else:
         build_array(_description, "acyklicznym gdyz brak polaczenia zamykajacego cykl od wierzcholka ")  
         build_array(_description, str(minV))
@@ -175,6 +218,20 @@ def task_two():
     return result 
 
 
+
+
+def task_three():
+    
+    result = ""    
+    _description = []
+    
+    build_array(_description, FILE_DESCRIPTION)  
+    
+    
+    
+    result = result.join(_description)
+    
+    return result 
 
 
 

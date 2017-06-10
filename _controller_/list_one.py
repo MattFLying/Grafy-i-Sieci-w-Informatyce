@@ -9,7 +9,7 @@ from _model_._graph import graph as _graph_
 
 GRAPH_FILE_PATH = "F:\GitHub\GiSwI\_model_\_files\_lists_\graph_file_task_1_v1.txt"
 GRAPH_FILE_MODE = 'r'
-GRAPH_FILE = _file_.readFile(GRAPH_FILE_PATH, GRAPH_FILE_MODE)
+GRAPH_FILE = _file_.readWriteFile(GRAPH_FILE_PATH, GRAPH_FILE_MODE)
 FILE_DESCRIPTION = "Plik uzyty do wczytania grafu: " + str(GRAPH_FILE.name)
 GRAPH_DICTIONARY = _file_.convertGraphFileIntoDictionary(GRAPH_FILE)
 GRAPH = _graph_.Graph(GRAPH_DICTIONARY, 1)
