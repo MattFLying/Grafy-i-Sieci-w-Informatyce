@@ -25,3 +25,15 @@ def convertGraphFileIntoDictionary(file):
     del tupleTemp
     
     return dictionaryGraph;
+
+def convertGraphFileIntoDictionaryGraphvizStyle(file):
+    
+    tupleTemp = tuple(file.read().split())    
+    dictionaryGraph = {}
+    
+    dictionaryGraph['name'] = tupleTemp[1]
+    dictionaryGraph['edges'] = tupleTemp[3:-1]
+    
+    del tupleTemp
+    
+    return dictionaryGraph;

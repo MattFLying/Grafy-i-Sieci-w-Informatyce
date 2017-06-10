@@ -12,7 +12,7 @@ GRAPH_FILE_MODE = 'r'
 GRAPH_FILE = _file_.readFile(GRAPH_FILE_PATH, GRAPH_FILE_MODE)
 FILE_DESCRIPTION = "Plik uzyty do wczytania grafu: " + str(GRAPH_FILE.name)
 GRAPH_DICTIONARY = _file_.convertGraphFileIntoDictionary(GRAPH_FILE)
-GRAPH = _graph_.Graph(GRAPH_DICTIONARY)
+GRAPH = _graph_.Graph(GRAPH_DICTIONARY, 1)
 GRAPH_EDGE_SEPARATOR = GRAPH.GRAPH_EDGE_SEPARATOR
 
 '''
