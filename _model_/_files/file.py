@@ -21,7 +21,7 @@ def createGraphFile(path, name, text):
     result = ""
     
     textArray.append("graph ")
-    textArray.append(name)
+    textArray.append(name.upper())
     textArray.append(" {")
     
     for i in text:
