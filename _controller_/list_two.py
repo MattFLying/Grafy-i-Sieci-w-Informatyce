@@ -362,13 +362,13 @@ def task_five():
             if len(p) == (len(GRAPH.getUniqueVertices())):  # Dodaj pelne sciezki
                 count_full_path += 1
         
-    build_array(_description, "\nLiczba istniejacych sciezek: ")  
+    build_array(_description, "\nLiczba istniejacych wszystkich sciezek: ")  
     build_array(_description, str(count))    
-    build_array(_description, "\nLiczba istniejacych pelnych sciezek przez kazdy wierzcholek: ")  
+    build_array(_description, "\nLiczba istniejacych pelnych sciezek przez kazdy wierzcholek(Cykl Eulera): ")  
     build_array(_description, str(count_full_path)) 
     build_array(_description, "\n\nWszystkie dostepne sciezki: \n")    
 
-    if count > neededPaths:  # Jesli liczba sciezek jest >= od wymaganych
+    if count_full_path >= neededPaths:  # Jesli liczba sciezek jest >= od wymaganych
         for i in sorted(connectedGraph):
             build_array(_description, str(i))  
             build_array(_description, ": ") 
@@ -422,3 +422,6 @@ def task_five():
     result = result.join(_description)
     
     return result
+
+
+print(task_five())

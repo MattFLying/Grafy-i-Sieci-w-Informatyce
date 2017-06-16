@@ -18,11 +18,21 @@ class Graph:
             self.__name = dictionary['name']
             self.__allEdges = dictionary['edges']
             self.GRAPH_EDGE_SEPARATOR = " -- "
+        elif self.__graphTaskType == 3:
+            self.__name = None
+            self.__edges = dictionary['e']
+            self.__vertices = dictionary['v'] 
+            self.__allEdges = dictionary['all']
+            self.GRAPH_EDGE_SEPARATOR = " -- "
+            self.__weights = {}
     
     
     def getName(self):
         
         return self.__name
+    
+    def setName(self, name):
+        self.__name = name
     
     def getEdges(self):
         
@@ -50,6 +60,13 @@ class Graph:
                 tab += i[5]
             
             return sorted(set(tab))
+        if self.__graphTaskType == 3:
+            tab = []
+            for i in self.getEdgesCollection():
+                tab += i[0]
+                tab += i[2]
+            
+            return sorted(set(tab))
     
     
     def getEdgesCollection(self):
@@ -62,12 +79,12 @@ class Graph:
             while (count < size):
                 edgesCollection += [
                     self.getAllEdges()[count] 
-                    + self.GRAPH_EDGE_SEPARATOR
-                    + self.getAllEdges()[count + 1]
-                ]
-                count += 2
+                    + self.GRAPH_EDGE_SEPARATOR 
+                    + self.getAllEdges()[count + 1]]
                 
-            return edgesCollection
+                count += 3
+            return edgesCollection    
+            
     
         elif self.__graphTaskType == 2:
             while (count < size):
@@ -77,15 +94,29 @@ class Graph:
                     + self.getAllEdges()[count + 2][:-1]
                 ]
                 count += 3
-            
-            
-            
             return edgesCollection
+    
+        elif self.__graphTaskType == 3:
+            
+            while (count < size):
+                text = self.getAllEdges()[count] \
+                    + self.GRAPH_EDGE_SEPARATOR \
+                    + self.getAllEdges()[count + 1]
+                edgesCollection += [text]
+                
+                self.__weights[text] = self.getAllEdges()[count + 2]
+                count += 3
+            return edgesCollection
+                
+        
     
     def getGraphOrder(self):
         
         return self.__vertices
     
+    def getGraphWeights(self):
+        
+        return self.__weights
     
     def getGraphSize(self):
         

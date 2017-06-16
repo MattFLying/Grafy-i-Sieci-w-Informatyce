@@ -36,7 +36,34 @@ def createGraphFile(path, name, text):
     createFile.write(result)
     
     createFile.close() 
-       
+  
+def createGraphFileWeights(path, name, dictionary):
+    file_extension = ".txt"
+    file_full_path = path + str("/") + name.lower() + file_extension
+    
+    edges_separator = " -- "
+    textArray = []
+    result = ""
+    
+    textArray.append("graph ")
+    textArray.append(name.upper())
+    textArray.append(" {")
+    
+    for i in dictionary:
+        edges = "\n    " + str(i[0]) + edges_separator + str(i[5]) + str(' label=["') + str(dictionary.get(i)) +\
+            str('"];')
+        textArray.append(edges)
+
+
+    textArray.append("\n}")
+    
+    createFile = readWriteFile(file_full_path, 'w')
+    
+    result = result.join(textArray)
+    createFile.write(result)
+    
+    createFile.close() 
+         
 def convertGraphFileIntoDictionary(file):
     
     tupleTemp = tuple(file.read().split())    
