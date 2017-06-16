@@ -1,0 +1,7 @@
+graph ChinskiListonosz {
+    1 -- 2 [label=28"];
+    1 -- 4 [label=15"];
+    2 -- 3 [label=37"];
+    2 -- 4 [label=42"];
+    2 -- 4 [label=42"];
+    3 -- 4 [label=95"];

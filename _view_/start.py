@@ -8,6 +8,7 @@ from enum import Enum
 from _controller_ import list_one as L01
 from _controller_ import list_two as L02
 from _controller_ import list_three as L03
+from _controller_ import list_four as L04
 
 
 class List(Enum):
@@ -67,6 +68,12 @@ def execute():
                         print(L03.task_four())    
                     elif choosen_task == Task.FIVE.value:
                         print(L03.task_five())    
+                    print("------------------\n")
+                elif choosen_list == List.FOUR.value:
+                    choosen_task = int(input(":::>> Ktore zadanie z Listy 4 pokazac? "))
+                    print("------------------")
+                    if choosen_task == Task.FIRST.value:
+                        print(L04.task_one())   
                     print("------------------\n")
             except:
                 print("Podano zla wartosc! Wprowadz wylacznie liczby 1-5!")    
